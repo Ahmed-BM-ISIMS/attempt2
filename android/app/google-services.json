@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "526718489563",
+    "project_id": "vitasora-22a61",
+    "storage_bucket": "vitasora-22a61.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:526718489563:android:2893dc9331a72d7dfe0dfe",
+        "android_client_info": {
+          "package_name": "com.VitaSora.vitasora"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "526718489563-kitu6bpa40nqbgokuks996k28h00atj6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoJsD0eQi-RW4-gPNSepnSm3Cx_j1QwHA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "526718489563-kitu6bpa40nqbgokuks996k28h00atj6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "526718489563-k6auckk76jitkvobdhd72c1mh987vvnh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.VitaSora.vitasora"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

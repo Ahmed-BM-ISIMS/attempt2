@@ -1,0 +1,1001 @@
+patient_id,age,heart_rate,blood_pressure,condition,pain_level,surgery_duration
+P001,53,87,130/76,Hernia,Severe,75
+P002,40,95,129/83,Gallstones,Moderate,42
+P003,46,109,147/71,Heart Attack,Moderate,149
+P004,41,84,116/69,Gallstones,Moderate,55
+P005,32,66,110/68,Gallstones,Mild,46
+P006,69,129,118/95,Heart Attack,Mild,142
+P007,57,66,97/74,Gallstones,Moderate,42
+P008,21,83,111/99,Torn ACL,Severe,65
+P009,33,97,135/81,Gallstones,Severe,41
+P010,60,74,97/73,Hernia,Moderate,72
+P011,79,75,107/74,Fracture,Moderate,50
+P012,42,124,138/84,Fracture,Severe,42
+P013,24,80,117/93,Appendicitis,Severe,55
+P014,37,92,94/69,Gallstones,Moderate,46
+P015,45,67,101/61,Fracture,Mild,30
+P016,40,116,144/81,Appendicitis,Moderate,52
+P017,64,96,103/62,Gallstones,Moderate,40
+P018,52,98,116/68,Kidney Stones,Moderate,44
+P019,66,91,128/76,Hernia,Moderate,69
+P020,21,82,128/72,Fracture,None,44
+P021,33,66,111/61,Kidney Stones,Mild,39
+P022,54,107,137/81,Kidney Stones,Severe,41
+P023,35,87,114/66,Hernia,Moderate,79
+P024,44,92,112/76,Appendicitis,Severe,50
+P025,26,92,113/74,Fracture,Moderate,56
+P026,56,71,128/61,Hernia,Moderate,52
+P027,41,81,111/97,Hernia,Severe,71
+P028,76,98,111/90,Heart Attack,Mild,133
+P029,23,83,120/93,Dislocated Knee,Severe,56
+P030,67,113,115/91,Gallstones,Severe,50
+P031,45,65,105/62,Kidney Stones,Moderate,49
+P032,60,82,128/89,Hernia,Severe,56
+P033,62,118,127/77,Gallstones,Severe,40
+P034,74,102,140/99,Stroke,Moderate,131
+P035,45,61,90/75,Gallstones,Mild,51
+P036,49,68,124/78,Fracture,Moderate,45
+P037,37,92,113/79,Torn ACL,Moderate,70
+P038,75,99,144/85,Bowel Obstruction,Mild,84
+P039,46,125,127/71,Fracture,Severe,51
+P040,46,112,113/70,Dislocated Knee,Severe,43
+P041,44,67,96/62,Hernia,Moderate,66
+P042,36,81,111/73,Hernia,Moderate,79
+P043,47,113,130/99,Bowel Obstruction,Moderate,92
+P044,50,127,128/73,Fracture,Severe,32
+P045,46,89,118/73,Kidney Stones,Mild,50
+P046,26,88,120/62,Torn ACL,Mild,87
+P047,38,112,112/87,Torn ACL,Severe,84
+P048,27,83,121/74,Hernia,Moderate,71
+P049,51,105,126/77,Hernia,Severe,50
+P050,56,105,144/87,Appendicitis,Severe,69
+P051,77,95,109/60,Fracture,Moderate,37
+P052,65,102,124/97,Stroke,Severe,155
+P053,48,104,131/95,Dislocated Knee,Severe,55
+P054,50,122,146/70,Heart Attack,Severe,97
+P055,41,98,93/65,Kidney Stones,Mild,42
+P056,59,99,105/72,Gallstones,Moderate,57
+P057,47,98,137/95,Fracture,Severe,52
+P058,55,82,98/71,Gallstones,Mild,40
+P059,30,91,114/67,Gallstones,Moderate,52
+P060,45,64,111/82,Gallstones,Moderate,42
+P061,45,101,138/83,Gallstones,Severe,44
+P062,47,84,121/85,Appendicitis,Moderate,70
+P063,50,112,139/74,Kidney Stones,Severe,52
+P064,49,110,119/95,Heart Attack,Moderate,108
+P065,18,63,105/83,Dislocated Knee,Moderate,45
+P066,66,91,116/79,Fracture,Mild,53
+P067,52,112,146/81,Stroke,Mild,156
+P068,37,88,102/71,Kidney Stones,Mild,43
+P069,79,105,117/98,Heart Attack,Severe,115
+P070,79,120,116/73,Stroke,None,147
+P071,62,115,134/90,Stroke,None,125
+P072,38,94,124/75,Gallstones,Moderate,43
+P073,63,82,121/64,Hernia,Moderate,61
+P074,37,94,119/76,Hernia,Moderate,66
+P075,33,92,128/86,Dislocated Knee,Severe,33
+P076,63,86,137/83,Heart Attack,Severe,120
+P077,58,95,114/72,Bowel Obstruction,Severe,71
+P078,45,82,105/84,Hernia,Moderate,56
+P079,59,93,140/95,Appendicitis,Mild,49
+P080,58,97,121/78,Kidney Stones,Severe,39
+P081,46,86,122/77,Kidney Stones,Severe,39
+P082,51,64,118/64,Hernia,Moderate,55
+P083,40,96,116/94,Bowel Obstruction,Mild,104
+P084,35,78,128/69,Kidney Stones,Moderate,55
+P085,27,129,137/99,Hernia,Severe,75
+P086,37,120,148/70,Kidney Stones,Severe,32
+P087,79,84,122/65,Fracture,Moderate,50
+P088,71,126,130/85,Bowel Obstruction,Moderate,113
+P089,76,98,129/94,Bowel Obstruction,Severe,77
+P090,43,80,112/85,Gallstones,Severe,50
+P091,61,117,121/93,Gallstones,Severe,47
+P092,65,87,117/64,Gallstones,Moderate,48
+P093,56,76,98/60,Gallstones,Moderate,59
+P094,65,125,144/98,Fracture,Severe,35
+P095,44,81,119/93,Bowel Obstruction,Moderate,89
+P096,30,112,110/87,Torn ACL,Severe,74
+P097,50,84,111/76,Gallstones,Moderate,52
+P098,58,80,130/85,Appendicitis,Severe,67
+P099,34,64,127/62,Torn ACL,Moderate,80
+P100,70,69,108/76,Fracture,None,50
+P101,31,124,122/73,Dislocated Knee,Severe,59
+P102,25,87,120/67,Torn ACL,Moderate,66
+P103,51,82,121/70,Stroke,Mild,143
+P104,69,96,132/84,Bowel Obstruction,Mild,96
+P105,19,98,127/61,Fracture,Mild,35
+P106,35,86,123/79,Fracture,Moderate,54
+P107,41,89,106/64,Fracture,None,58
+P108,34,99,133/74,Appendicitis,Severe,46
+P109,19,70,112/82,Fracture,Moderate,45
+P110,45,99,93/83,Gallstones,Moderate,42
+P111,35,78,110/64,Torn ACL,Moderate,77
+P112,51,80,114/78,Gallstones,Severe,51
+P113,63,105,136/78,Gallstones,Severe,54
+P114,64,76,115/63,Fracture,Moderate,30
+P115,52,94,131/83,Appendicitis,Severe,70
+P116,43,124,135/83,Kidney Stones,Severe,56
+P117,36,82,107/65,Gallstones,Moderate,42
+P118,49,87,99/66,Hernia,Moderate,74
+P119,39,123,134/86,Torn ACL,Severe,72
+P120,21,77,125/74,Fracture,Moderate,51
+P121,25,78,126/65,Fracture,Moderate,49
+P122,51,124,115/74,Fracture,Severe,54
+P123,51,85,113/99,Gallstones,Severe,50
+P124,47,88,112/88,Appendicitis,Severe,52
+P125,73,81,129/97,Stroke,Moderate,164
+P126,23,89,127/78,Torn ACL,Mild,89
+P127,54,105,114/75,Bowel Obstruction,Moderate,85
+P128,43,99,121/84,Hernia,Severe,50
+P129,55,70,125/72,Fracture,Moderate,40
+P130,23,69,94/82,Fracture,Moderate,39
+P131,52,99,110/74,Bowel Obstruction,Moderate,68
+P132,40,117,144/99,Kidney Stones,Severe,46
+P133,29,70,98/61,Torn ACL,Moderate,71
+P134,25,81,118/67,Hernia,Moderate,60
+P135,43,94,110/64,Kidney Stones,Moderate,34
+P136,43,63,114/72,Gallstones,Moderate,49
+P137,64,99,103/78,Hernia,Moderate,78
+P138,47,92,114/76,Hernia,Moderate,50
+P139,26,99,129/78,Hernia,Moderate,56
+P140,23,87,124/84,Appendicitis,Severe,73
+P141,47,95,118/65,Dislocated Knee,Moderate,54
+P142,61,92,93/81,Hernia,Moderate,51
+P143,56,97,102/74,Kidney Stones,Moderate,33
+P144,37,108,117/74,Dislocated Knee,Severe,58
+P145,41,86,120/78,Gallstones,Moderate,58
+P146,43,84,129/80,Fracture,Severe,59
+P147,23,102,135/83,Torn ACL,Severe,70
+P148,42,97,134/70,Gallstones,Severe,54
+P149,40,95,93/64,Kidney Stones,Mild,53
+P150,72,88,138/83,Heart Attack,Severe,129
+P151,28,96,110/73,Torn ACL,Moderate,63
+P152,18,119,124/90,Appendicitis,Moderate,59
+P153,26,105,144/89,Appendicitis,Severe,69
+P154,23,97,136/71,Torn ACL,Severe,86
+P155,28,103,134/76,Dislocated Knee,Severe,49
+P156,48,88,111/77,Hernia,Moderate,70
+P157,34,79,111/67,Fracture,None,46
+P158,56,102,128/99,Hernia,Severe,79
+P159,58,99,108/77,Gallstones,Moderate,40
+P160,44,87,119/65,Kidney Stones,Moderate,48
+P161,30,118,112/79,Gallstones,Severe,49
+P162,19,82,117/77,Torn ACL,Moderate,66
+P163,18,62,113/82,Fracture,Moderate,56
+P164,25,126,146/72,Dislocated Knee,Severe,48
+P165,64,94,121/83,Fracture,Mild,43
+P166,63,63,126/81,Fracture,Mild,50
+P167,42,86,142/92,Hernia,Severe,70
+P168,63,97,111/70,Heart Attack,Severe,136
+P169,28,81,112/92,Fracture,Severe,52
+P170,34,109,118/71,Gallstones,Severe,51
+P171,51,76,99/83,Gallstones,Moderate,53
+P172,49,96,123/78,Dislocated Knee,Severe,37
+P173,74,101,113/95,Stroke,Moderate,147
+P174,19,90,115/87,Torn ACL,Severe,80
+P175,38,96,146/94,Kidney Stones,Severe,35
+P176,52,101,130/96,Kidney Stones,Severe,54
+P177,56,71,96/69,Gallstones,Moderate,52
+P178,50,125,111/97,Kidney Stones,Severe,51
+P179,48,105,138/90,Kidney Stones,Severe,40
+P180,65,98,129/62,Gallstones,Moderate,41
+P181,48,64,122/63,Hernia,Mild,64
+P182,64,76,123/68,Gallstones,Mild,41
+P183,26,80,134/98,Appendicitis,Severe,55
+P184,42,82,146/81,Fracture,Severe,41
+P185,77,98,146/81,Bowel Obstruction,Moderate,118
+P186,34,71,105/83,Torn ACL,Mild,78
+P187,50,96,105/65,Kidney Stones,Moderate,37
+P188,54,85,115/74,Gallstones,Moderate,49
+P189,34,100,131/95,Fracture,Severe,36
+P190,51,127,117/87,Heart Attack,Severe,148
+P191,57,118,144/87,Bowel Obstruction,Moderate,118
+P192,46,83,124/71,Kidney Stones,Moderate,57
+P193,20,99,115/82,Dislocated Knee,Moderate,52
+P194,32,83,138/91,Appendicitis,Moderate,69
+P195,30,61,124/69,Kidney Stones,Moderate,31
+P196,57,111,141/72,Heart Attack,Severe,148
+P197,68,108,125/93,Bowel Obstruction,Moderate,103
+P198,49,118,129/74,Bowel Obstruction,Severe,60
+P199,32,89,93/77,Gallstones,Moderate,44
+P200,45,94,118/84,Heart Attack,Mild,138
+P201,28,116,146/80,Hernia,Severe,77
+P202,48,72,123/84,Hernia,Moderate,56
+P203,47,124,119/80,Bowel Obstruction,Mild,93
+P204,65,82,115/74,Hernia,Severe,54
+P205,40,94,109/76,Fracture,Mild,58
+P206,64,76,113/62,Gallstones,Moderate,42
+P207,54,73,126/61,Gallstones,Moderate,50
+P208,20,108,118/72,Torn ACL,Severe,84
+P209,27,99,114/64,Torn ACL,Moderate,70
+P210,41,117,117/96,Appendicitis,Severe,49
+P211,62,127,122/97,Heart Attack,Severe,94
+P212,79,108,112/93,Bowel Obstruction,Mild,99
+P213,76,112,115/93,Stroke,None,108
+P214,18,127,122/80,Torn ACL,Severe,72
+P215,59,106,147/97,Stroke,Moderate,96
+P216,30,90,112/69,Torn ACL,Moderate,69
+P217,50,90,107/63,Kidney Stones,Moderate,31
+P218,58,81,141/82,Kidney Stones,Severe,43
+P219,65,90,123/83,Hernia,Moderate,62
+P220,35,86,119/78,Kidney Stones,Severe,31
+P221,39,88,111/63,Hernia,Mild,69
+P222,67,96,121/91,Stroke,None,106
+P223,18,97,123/84,Fracture,Severe,58
+P224,44,91,116/98,Dislocated Knee,Severe,40
+P225,44,90,132/95,Kidney Stones,Severe,31
+P226,58,94,102/68,Gallstones,Mild,46
+P227,46,91,91/74,Fracture,Moderate,43
+P228,40,96,137/98,Gallstones,Severe,54
+P229,44,64,92/60,Hernia,Moderate,75
+P230,32,94,114/83,Torn ACL,Moderate,71
+P231,61,67,114/76,Fracture,Moderate,58
+P232,44,129,116/72,Kidney Stones,Severe,58
+P233,41,82,129/83,Appendicitis,Mild,59
+P234,31,79,125/68,Dislocated Knee,Moderate,35
+P235,51,61,113/67,Gallstones,Moderate,50
+P236,56,97,139/87,Bowel Obstruction,Severe,105
+P237,77,124,134/70,Bowel Obstruction,Severe,119
+P238,37,83,106/71,Kidney Stones,Moderate,54
+P239,32,81,117/79,Fracture,Moderate,30
+P240,49,92,91/60,Fracture,None,30
+P241,18,85,111/66,Torn ACL,Moderate,61
+P242,65,129,124/71,Bowel Obstruction,Moderate,101
+P243,69,62,95/68,Gallstones,Moderate,45
+P244,48,71,97/67,Fracture,Moderate,47
+P245,37,66,100/79,Fracture,Moderate,45
+P246,75,62,103/70,Fracture,Mild,47
+P247,40,104,128/92,Appendicitis,Moderate,58
+P248,32,91,107/65,Hernia,Mild,67
+P249,54,62,117/69,Fracture,None,48
+P250,78,94,142/76,Stroke,Mild,165
+P251,50,83,109/64,Gallstones,Moderate,43
+P252,59,83,121/68,Kidney Stones,Mild,33
+P253,78,81,124/71,Heart Attack,Severe,125
+P254,66,71,92/72,Hernia,Mild,67
+P255,32,105,117/73,Fracture,Severe,45
+P256,59,93,111/92,Fracture,Severe,34
+P257,30,73,128/84,Torn ACL,Moderate,79
+P258,23,84,117/61,Fracture,Moderate,32
+P259,18,95,112/74,Fracture,Mild,40
+P260,39,89,138/79,Torn ACL,Severe,71
+P261,30,87,121/70,Kidney Stones,Severe,54
+P262,49,122,146/84,Gallstones,Severe,44
+P263,66,87,104/65,Fracture,Mild,41
+P264,37,81,118/74,Fracture,Severe,49
+P265,18,85,146/90,Appendicitis,Severe,71
+P266,38,79,113/70,Hernia,Moderate,79
+P267,68,110,132/81,Bowel Obstruction,Mild,97
+P268,33,87,130/70,Appendicitis,Mild,67
+P269,55,101,143/70,Stroke,None,144
+P270,49,97,126/95,Bowel Obstruction,Severe,67
+P271,34,87,134/83,Torn ACL,Severe,63
+P272,68,93,114/78,Stroke,None,179
+P273,26,65,98/60,Hernia,Mild,58
+P274,52,92,140/78,Bowel Obstruction,Moderate,70
+P275,23,117,128/75,Torn ACL,Severe,61
+P276,38,124,120/70,Kidney Stones,Severe,53
+P277,31,94,110/81,Hernia,Severe,75
+P278,45,88,114/60,Hernia,Moderate,66
+P279,52,105,120/72,Fracture,Severe,37
+P280,27,68,92/80,Fracture,Mild,55
+P281,41,108,135/94,Bowel Obstruction,Severe,71
+P282,54,115,124/80,Appendicitis,Severe,60
+P283,63,80,112/70,Fracture,Mild,52
+P284,38,84,125/70,Torn ACL,Moderate,78
+P285,38,98,143/83,Appendicitis,Severe,73
+P286,70,106,138/84,Fracture,Severe,57
+P287,33,109,127/71,Fracture,Severe,46
+P288,65,90,116/81,Bowel Obstruction,Severe,69
+P289,36,128,145/89,Kidney Stones,Severe,33
+P290,18,124,122/92,Appendicitis,Severe,66
+P291,51,85,98/74,Kidney Stones,Moderate,39
+P292,37,85,116/64,Gallstones,Moderate,43
+P293,48,98,99/84,Gallstones,Mild,57
+P294,39,129,114/84,Kidney Stones,Severe,46
+P295,31,100,126/91,Kidney Stones,Severe,45
+P296,59,91,100/69,Hernia,Moderate,58
+P297,49,94,96/80,Hernia,Mild,67
+P298,63,70,128/83,Hernia,Moderate,77
+P299,33,91,128/72,Kidney Stones,Moderate,43
+P300,66,62,98/67,Gallstones,Mild,40
+P301,68,128,111/97,Gallstones,Severe,44
+P302,49,117,117/87,Appendicitis,Severe,47
+P303,78,81,95/61,Fracture,Moderate,52
+P304,62,93,112/79,Hernia,Moderate,57
+P305,75,72,118/74,Fracture,None,54
+P306,59,75,101/76,Gallstones,Moderate,55
+P307,37,89,112/78,Fracture,Moderate,37
+P308,64,123,110/94,Heart Attack,Mild,119
+P309,23,87,148/70,Fracture,Severe,50
+P310,35,93,145/70,Kidney Stones,Severe,52
+P311,31,81,136/94,Gallstones,Severe,48
+P312,20,102,135/73,Dislocated Knee,Severe,47
+P313,52,74,111/64,Fracture,Mild,49
+P314,67,94,119/83,Gallstones,Mild,49
+P315,23,86,123/78,Torn ACL,Severe,74
+P316,26,114,127/83,Hernia,Severe,69
+P317,27,84,122/63,Fracture,Mild,43
+P318,33,82,144/78,Appendicitis,Moderate,50
+P319,51,113,113/94,Appendicitis,Severe,59
+P320,51,111,137/82,Bowel Obstruction,Mild,90
+P321,35,85,141/98,Dislocated Knee,Severe,40
+P322,77,90,94/78,Fracture,Moderate,31
+P323,19,129,140/93,Dislocated Knee,Severe,44
+P324,58,100,118/97,Bowel Obstruction,Severe,105
+P325,33,112,113/73,Appendicitis,Moderate,51
+P326,66,88,125/65,Gallstones,Moderate,46
+P327,34,94,96/81,Kidney Stones,Moderate,43
+P328,51,61,116/80,Gallstones,Mild,45
+P329,39,98,94/60,Gallstones,Moderate,52
+P330,65,116,141/73,Heart Attack,Severe,106
+P331,28,105,113/71,Appendicitis,Severe,64
+P332,47,88,118/65,Gallstones,Moderate,49
+P333,42,96,118/78,Kidney Stones,Severe,30
+P334,45,89,149/90,Kidney Stones,Severe,57
+P335,51,81,97/76,Fracture,Moderate,44
+P336,30,111,110/92,Torn ACL,Severe,64
+P337,52,122,110/82,Heart Attack,Severe,140
+P338,41,99,130/77,Appendicitis,Severe,70
+P339,21,94,128/76,Dislocated Knee,Severe,48
+P340,34,91,97/69,Gallstones,Moderate,45
+P341,45,87,149/94,Appendicitis,Moderate,53
+P342,27,83,123/78,Hernia,Severe,58
+P343,49,91,136/77,Bowel Obstruction,Moderate,61
+P344,70,75,121/61,Fracture,None,40
+P345,61,88,134/77,Heart Attack,Mild,148
+P346,75,81,119/79,Fracture,Moderate,50
+P347,68,100,144/95,Stroke,None,121
+P348,63,77,110/72,Hernia,Mild,79
+P349,25,66,112/71,Dislocated Knee,Moderate,40
+P350,46,81,117/72,Hernia,Mild,67
+P351,38,106,140/84,Appendicitis,Moderate,63
+P352,42,96,122/83,Gallstones,Moderate,42
+P353,43,109,148/81,Hernia,Severe,64
+P354,22,121,125/77,Torn ACL,Severe,60
+P355,32,99,124/69,Kidney Stones,Mild,31
+P356,39,98,116/61,Gallstones,Moderate,48
+P357,33,81,115/81,Hernia,Moderate,61
+P358,43,79,100/75,Kidney Stones,Moderate,48
+P359,23,96,93/74,Torn ACL,Moderate,88
+P360,27,94,115/64,Fracture,Mild,35
+P361,64,89,147/83,Hernia,Severe,53
+P362,49,66,93/73,Gallstones,Moderate,42
+P363,33,83,133/71,Appendicitis,Severe,74
+P364,57,78,111/83,Kidney Stones,Moderate,42
+P365,55,90,125/78,Kidney Stones,Moderate,45
+P366,54,92,107/79,Hernia,Moderate,66
+P367,76,92,106/65,Fracture,Mild,33
+P368,32,85,123/97,Dislocated Knee,Severe,40
+P369,55,69,92/72,Kidney Stones,Moderate,40
+P370,50,124,128/79,Heart Attack,Severe,124
+P371,29,96,109/76,Hernia,Mild,70
+P372,22,85,93/66,Dislocated Knee,Moderate,36
+P373,18,95,95/68,Dislocated Knee,Moderate,51
+P374,60,84,125/80,Gallstones,Mild,51
+P375,66,114,137/83,Heart Attack,Severe,145
+P376,55,121,134/82,Bowel Obstruction,Moderate,65
+P377,53,99,127/95,Appendicitis,Severe,55
+P378,21,106,116/75,Appendicitis,Severe,59
+P379,55,94,116/90,Heart Attack,Mild,131
+P380,53,116,130/87,Kidney Stones,Severe,34
+P381,43,128,128/88,Fracture,Severe,54
+P382,51,120,142/87,Bowel Obstruction,Severe,112
+P383,36,92,106/83,Gallstones,Moderate,41
+P384,67,101,126/71,Hernia,Severe,55
+P385,63,80,94/61,Gallstones,Moderate,55
+P386,39,98,111/71,Gallstones,Moderate,54
+P387,77,94,121/66,Fracture,Moderate,50
+P388,33,81,104/83,Gallstones,Moderate,47
+P389,39,93,136/98,Torn ACL,Severe,68
+P390,45,61,114/83,Fracture,Mild,59
+P391,68,94,95/66,Hernia,Moderate,69
+P392,44,98,114/88,Dislocated Knee,Severe,40
+P393,39,107,145/74,Gallstones,Severe,47
+P394,44,125,149/87,Kidney Stones,Severe,39
+P395,23,66,105/62,Dislocated Knee,Moderate,42
+P396,35,117,142/97,Torn ACL,Severe,60
+P397,52,127,146/73,Heart Attack,Moderate,119
+P398,71,68,101/70,Fracture,Mild,43
+P399,25,80,119/72,Hernia,Moderate,51
+P400,67,86,94/84,Gallstones,Mild,42
+P401,42,85,94/62,Fracture,Mild,58
+P402,33,65,108/71,Hernia,Mild,74
+P403,32,68,110/83,Dislocated Knee,Moderate,31
+P404,41,105,130/97,Kidney Stones,Severe,53
+P405,50,113,127/95,Appendicitis,Severe,55
+P406,65,76,94/71,Fracture,Moderate,40
+P407,20,95,143/71,Torn ACL,Severe,62
+P408,77,85,118/89,Stroke,Mild,90
+P409,52,82,113/95,Kidney Stones,Severe,54
+P410,44,114,123/73,Gallstones,Severe,51
+P411,38,72,104/77,Gallstones,Moderate,58
+P412,19,97,103/63,Torn ACL,Moderate,80
+P413,52,73,109/76,Fracture,Moderate,54
+P414,38,82,111/75,Hernia,Mild,74
+P415,27,68,117/79,Hernia,Moderate,62
+P416,48,98,123/93,Bowel Obstruction,Severe,97
+P417,53,109,118/70,Appendicitis,Severe,68
+P418,43,94,103/68,Gallstones,Moderate,43
+P419,45,120,131/78,Appendicitis,Moderate,68
+P420,45,128,139/81,Gallstones,Severe,42
+P421,50,64,109/64,Gallstones,Moderate,42
+P422,38,88,113/72,Dislocated Knee,Severe,46
+P423,49,124,132/84,Appendicitis,Severe,52
+P424,36,74,108/79,Hernia,Moderate,78
+P425,50,79,118/78,Gallstones,Moderate,43
+P426,77,101,121/82,Stroke,Moderate,156
+P427,19,106,110/77,Fracture,Severe,52
+P428,46,96,121/75,Hernia,Severe,75
+P429,36,80,138/82,Torn ACL,Severe,76
+P430,31,79,102/65,Fracture,Moderate,46
+P431,52,112,135/76,Heart Attack,Severe,110
+P432,49,68,113/64,Dislocated Knee,Moderate,46
+P433,41,98,128/72,Fracture,Moderate,40
+P434,55,125,110/77,Heart Attack,Severe,133
+P435,37,71,122/72,Kidney Stones,Mild,55
+P436,44,106,132/99,Bowel Obstruction,Severe,104
+P437,46,77,107/61,Kidney Stones,Moderate,33
+P438,60,78,117/67,Hernia,Moderate,69
+P439,29,94,148/71,Torn ACL,Severe,88
+P440,51,92,119/83,Stroke,None,171
+P441,26,107,112/89,Appendicitis,Moderate,50
+P442,19,82,125/99,Appendicitis,Severe,52
+P443,38,114,110/92,Kidney Stones,Severe,42
+P444,61,128,140/94,Hernia,Severe,72
+P445,35,77,125/62,Kidney Stones,Moderate,42
+P446,67,93,121/62,Gallstones,Moderate,42
+P447,32,82,129/70,Torn ACL,Moderate,75
+P448,77,113,137/74,Heart Attack,Severe,96
+P449,18,99,128/98,Appendicitis,Severe,54
+P450,45,126,140/96,Fracture,Severe,59
+P451,66,64,97/61,Fracture,Moderate,45
+P452,41,90,93/76,Gallstones,Moderate,52
+P453,69,82,120/82,Bowel Obstruction,Severe,63
+P454,44,129,115/96,Appendicitis,Severe,73
+P455,47,116,146/72,Dislocated Knee,Severe,52
+P456,35,88,102/74,Dislocated Knee,Moderate,59
+P457,69,81,93/64,Hernia,Mild,54
+P458,30,81,112/78,Dislocated Knee,Moderate,32
+P459,56,80,110/71,Hernia,Moderate,60
+P460,68,103,144/82,Fracture,Severe,44
+P461,33,96,144/97,Kidney Stones,Severe,47
+P462,74,78,126/66,Fracture,Mild,50
+P463,22,115,128/96,Appendicitis,Severe,65
+P464,71,71,110/81,Fracture,Moderate,40
+P465,22,79,101/65,Fracture,Mild,46
+P466,65,123,141/75,Bowel Obstruction,Mild,114
+P467,62,83,112/74,Hernia,Moderate,76
+P468,74,76,103/77,Fracture,Moderate,57
+P469,44,94,98/67,Kidney Stones,Moderate,49
+P470,61,111,117/88,Heart Attack,Moderate,127
+P471,34,90,105/77,Gallstones,Moderate,50
+P472,27,100,125/81,Torn ACL,Severe,61
+P473,59,109,144/88,Hernia,Severe,67
+P474,66,109,116/72,Stroke,Severe,154
+P475,61,96,102/67,Hernia,Moderate,57
+P476,38,95,124/61,Kidney Stones,Moderate,37
+P477,58,83,139/75,Hernia,Severe,60
+P478,27,72,121/61,Hernia,Moderate,62
+P479,77,119,126/92,Bowel Obstruction,Severe,93
+P480,45,81,111/95,Kidney Stones,Severe,42
+P481,48,118,112/77,Fracture,Severe,52
+P482,66,118,148/70,Bowel Obstruction,Severe,76
+P483,70,98,128/94,Fracture,Severe,54
+P484,34,111,119/79,Appendicitis,Moderate,48
+P485,69,73,117/73,Fracture,Moderate,49
+P486,39,63,102/82,Hernia,Moderate,57
+P487,60,97,143/80,Gallstones,Severe,48
+P488,44,128,138/95,Kidney Stones,Severe,47
+P489,67,83,97/68,Gallstones,Mild,45
+P490,58,60,108/68,Gallstones,Mild,41
+P491,60,72,108/76,Hernia,Mild,55
+P492,36,76,112/60,Hernia,Moderate,77
+P493,73,82,110/80,Fracture,Moderate,40
+P494,50,90,126/73,Fracture,Severe,44
+P495,48,98,128/81,Bowel Obstruction,Severe,96
+P496,72,114,127/83,Heart Attack,Moderate,124
+P497,31,77,126/72,Hernia,Moderate,53
+P498,33,117,120/91,Torn ACL,Severe,83
+P499,53,93,98/83,Fracture,Moderate,37
+P500,35,65,110/67,Fracture,Mild,51
+P501,65,122,144/82,Gallstones,Severe,56
+P502,27,126,119/83,Appendicitis,Severe,57
+P503,48,76,125/73,Hernia,Mild,59
+P504,47,96,121/91,Heart Attack,Severe,141
+P505,69,105,147/70,Heart Attack,Mild,109
+P506,33,99,117/71,Dislocated Knee,Moderate,56
+P507,59,89,123/64,Fracture,Mild,35
+P508,49,112,116/89,Dislocated Knee,Severe,54
+P509,40,95,102/66,Hernia,Moderate,53
+P510,26,67,122/82,Torn ACL,Moderate,84
+P511,69,63,129/62,Hernia,Moderate,78
+P512,63,72,104/82,Gallstones,Moderate,51
+P513,43,84,141/89,Appendicitis,Mild,62
+P514,49,120,126/96,Fracture,Severe,55
+P515,55,78,100/72,Gallstones,Mild,47
+P516,64,90,110/86,Fracture,Severe,44
+P517,39,90,115/76,Torn ACL,Moderate,77
+P518,55,112,147/96,Heart Attack,Severe,123
+P519,50,65,127/81,Gallstones,Mild,57
+P520,63,89,92/65,Fracture,Moderate,58
+P521,30,112,126/85,Dislocated Knee,Severe,40
+P522,40,123,115/78,Kidney Stones,Severe,45
+P523,77,85,101/70,Fracture,None,34
+P524,36,117,127/95,Dislocated Knee,Severe,35
+P525,58,93,106/70,Gallstones,Mild,50
+P526,19,67,102/69,Fracture,None,37
+P527,33,80,148/86,Kidney Stones,Severe,56
+P528,61,123,118/74,Bowel Obstruction,Mild,69
+P529,57,80,113/69,Kidney Stones,Mild,57
+P530,37,81,126/84,Gallstones,Mild,42
+P531,30,88,136/71,Torn ACL,Severe,78
+P532,42,62,109/79,Dislocated Knee,Moderate,50
+P533,79,106,135/83,Heart Attack,Mild,106
+P534,49,106,127/73,Kidney Stones,Severe,30
+P535,55,82,99/70,Gallstones,Mild,48
+P536,45,113,138/73,Heart Attack,Severe,94
+P537,73,114,121/95,Stroke,Mild,108
+P538,24,86,135/77,Appendicitis,Moderate,49
+P539,28,79,104/77,Hernia,Mild,69
+P540,37,98,148/83,Gallstones,Severe,53
+P541,21,114,146/70,Appendicitis,Severe,47
+P542,44,115,143/98,Appendicitis,Moderate,68
+P543,28,128,132/90,Hernia,Severe,73
+P544,69,120,115/74,Hernia,Severe,74
+P545,46,100,129/72,Bowel Obstruction,Severe,110
+P546,21,117,145/84,Appendicitis,Mild,53
+P547,35,96,114/75,Torn ACL,Moderate,86
+P548,65,81,110/81,Gallstones,Mild,47
+P549,76,69,121/61,Fracture,Moderate,59
+P550,28,81,106/63,Fracture,Moderate,45
+P551,49,116,147/86,Hernia,Severe,50
+P552,68,120,133/71,Stroke,Mild,104
+P553,76,126,132/95,Stroke,None,128
+P554,34,120,138/78,Torn ACL,Severe,72
+P555,49,62,106/76,Gallstones,Mild,51
+P556,62,80,126/72,Stroke,None,179
+P557,61,83,127/86,Gallstones,Severe,58
+P558,32,112,123/71,Kidney Stones,Severe,58
+P559,41,98,115/94,Appendicitis,Moderate,45
+P560,58,84,136/85,Bowel Obstruction,Severe,65
+P561,52,95,119/94,Appendicitis,Mild,64
+P562,61,101,146/77,Stroke,Moderate,96
+P563,27,78,107/79,Hernia,Mild,65
+P564,62,70,94/71,Gallstones,Moderate,56
+P565,44,93,114/91,Bowel Obstruction,Moderate,115
+P566,59,120,128/91,Kidney Stones,Severe,34
+P567,47,83,142/82,Appendicitis,Severe,64
+P568,64,102,128/91,Stroke,Moderate,109
+P569,47,67,115/69,Gallstones,Mild,56
+P570,22,120,114/87,Appendicitis,Mild,70
+P571,66,71,96/62,Fracture,Moderate,39
+P572,52,103,119/75,Fracture,Severe,51
+P573,56,126,147/89,Appendicitis,Severe,71
+P574,37,79,124/74,Dislocated Knee,Moderate,31
+P575,63,65,104/69,Gallstones,Moderate,48
+P576,65,115,111/98,Stroke,Mild,157
+P577,65,94,131/88,Bowel Obstruction,Severe,107
+P578,66,109,134/82,Heart Attack,Severe,117
+P579,62,68,125/78,Fracture,Moderate,30
+P580,38,91,121/65,Gallstones,Mild,55
+P581,27,129,144/89,Fracture,Severe,56
+P582,42,94,113/98,Appendicitis,Severe,71
+P583,55,87,106/70,Kidney Stones,Mild,54
+P584,67,119,148/86,Stroke,None,112
+P585,50,84,143/77,Appendicitis,Severe,55
+P586,20,112,120/85,Dislocated Knee,Severe,47
+P587,34,78,125/72,Hernia,Mild,73
+P588,39,86,97/78,Gallstones,Moderate,53
+P589,33,122,134/76,Hernia,Severe,66
+P590,18,68,107/83,Torn ACL,Moderate,86
+P591,46,97,129/63,Dislocated Knee,Moderate,47
+P592,54,77,123/81,Fracture,Mild,40
+P593,30,66,113/63,Fracture,Moderate,57
+P594,20,129,110/75,Appendicitis,Severe,50
+P595,46,89,137/90,Appendicitis,Severe,62
+P596,30,78,124/63,Torn ACL,Moderate,64
+P597,56,121,132/94,Heart Attack,Severe,110
+P598,55,84,121/82,Kidney Stones,Moderate,34
+P599,66,98,105/60,Hernia,Moderate,66
+P600,26,124,144/76,Appendicitis,Severe,66
+P601,22,76,101/82,Fracture,Moderate,45
+P602,54,88,138/84,Kidney Stones,Severe,34
+P603,56,82,106/82,Hernia,Moderate,57
+P604,22,77,119/81,Torn ACL,Moderate,81
+P605,34,111,123/95,Appendicitis,Severe,54
+P606,68,88,137/80,Fracture,Severe,43
+P607,48,107,133/77,Gallstones,Severe,50
+P608,64,92,108/62,Fracture,Mild,39
+P609,66,129,143/88,Hernia,Severe,62
+P610,19,126,122/85,Torn ACL,Severe,76
+P611,46,103,135/86,Dislocated Knee,Severe,36
+P612,43,86,148/90,Appendicitis,Moderate,45
+P613,61,82,124/98,Heart Attack,Moderate,142
+P614,55,104,137/78,Gallstones,Severe,40
+P615,39,66,103/78,Dislocated Knee,Moderate,48
+P616,30,70,119/84,Torn ACL,Moderate,67
+P617,46,101,115/81,Heart Attack,Severe,136
+P618,53,77,91/72,Fracture,Mild,42
+P619,59,121,138/72,Bowel Obstruction,Mild,78
+P620,31,83,120/95,Appendicitis,Severe,55
+P621,69,128,118/97,Bowel Obstruction,Severe,90
+P622,58,127,134/73,Kidney Stones,Severe,37
+P623,61,98,121/79,Hernia,Moderate,66
+P624,63,108,116/97,Heart Attack,Severe,98
+P625,30,76,105/82,Hernia,Moderate,52
+P626,43,96,111/69,Dislocated Knee,Moderate,41
+P627,30,75,97/67,Dislocated Knee,Moderate,56
+P628,31,71,99/71,Gallstones,Moderate,50
+P629,46,71,115/82,Gallstones,Moderate,57
+P630,77,82,147/72,Bowel Obstruction,Moderate,89
+P631,59,107,130/95,Gallstones,Severe,53
+P632,65,69,128/80,Gallstones,Mild,54
+P633,52,83,109/64,Kidney Stones,Mild,49
+P634,52,116,131/75,Hernia,Severe,78
+P635,20,65,114/83,Torn ACL,Moderate,73
+P636,25,66,129/72,Torn ACL,Moderate,65
+P637,25,117,136/89,Appendicitis,Severe,56
+P638,55,69,92/72,Hernia,Mild,76
+P639,44,92,144/89,Gallstones,Severe,50
+P640,35,127,144/91,Hernia,Severe,55
+P641,68,111,145/92,Heart Attack,Severe,104
+P642,75,75,94/80,Fracture,Moderate,58
+P643,42,108,128/80,Fracture,Severe,31
+P644,60,127,128/92,Stroke,Mild,113
+P645,58,64,94/78,Hernia,Moderate,70
+P646,43,121,129/75,Bowel Obstruction,Mild,84
+P647,49,97,136/92,Dislocated Knee,Severe,51
+P648,47,64,112/68,Hernia,Mild,76
+P649,58,101,128/70,Stroke,Severe,153
+P650,30,91,131/91,Kidney Stones,Severe,47
+P651,46,79,122/82,Fracture,None,56
+P652,61,99,139/75,Stroke,Mild,92
+P653,43,72,91/64,Fracture,Moderate,46
+P654,65,90,117/81,Gallstones,Severe,47
+P655,37,119,135/99,Fracture,Severe,46
+P656,69,125,116/85,Fracture,Severe,42
+P657,66,103,118/72,Bowel Obstruction,Moderate,110
+P658,61,87,124/90,Heart Attack,Severe,119
+P659,56,91,126/79,Appendicitis,Severe,74
+P660,35,66,123/79,Hernia,Moderate,67
+P661,39,94,146/89,Gallstones,Severe,42
+P662,79,123,132/77,Bowel Obstruction,Severe,70
+P663,32,89,148/97,Hernia,Severe,66
+P664,37,116,135/91,Hernia,Severe,53
+P665,55,102,131/71,Appendicitis,Moderate,67
+P666,63,84,147/79,Stroke,None,129
+P667,48,82,106/60,Hernia,Moderate,72
+P668,73,92,134/85,Bowel Obstruction,Severe,77
+P669,57,74,104/82,Fracture,Moderate,36
+P670,49,79,115/80,Fracture,Mild,47
+P671,26,123,147/88,Dislocated Knee,Severe,57
+P672,59,75,128/63,Hernia,Moderate,76
+P673,59,76,126/65,Kidney Stones,Mild,48
+P674,57,110,113/97,Kidney Stones,Severe,36
+P675,52,117,147/93,Bowel Obstruction,Moderate,87
+P676,32,124,143/85,Gallstones,Severe,45
+P677,47,85,123/72,Bowel Obstruction,Severe,69
+P678,36,90,118/64,Hernia,Moderate,79
+P679,70,99,148/91,Bowel Obstruction,Severe,63
+P680,64,96,145/70,Heart Attack,Severe,90
+P681,41,87,136/82,Hernia,Severe,72
+P682,32,72,128/64,Hernia,Mild,66
+P683,58,81,127/86,Kidney Stones,Severe,59
+P684,71,125,139/87,Bowel Obstruction,Severe,72
+P685,79,96,149/88,Stroke,Moderate,104
+P686,27,82,119/60,Torn ACL,Moderate,84
+P687,39,94,100/61,Dislocated Knee,Mild,45
+P688,44,73,97/67,Gallstones,Moderate,51
+P689,64,90,148/80,Hernia,Severe,66
+P690,58,99,112/83,Gallstones,Mild,45
+P691,62,87,144/88,Hernia,Severe,60
+P692,45,99,108/66,Hernia,Mild,77
+P693,23,97,117/61,Fracture,Moderate,35
+P694,43,128,145/95,Bowel Obstruction,Severe,72
+P695,76,115,128/95,Heart Attack,Severe,149
+P696,64,87,90/69,Hernia,Moderate,67
+P697,72,87,133/85,Bowel Obstruction,Mild,109
+P698,66,95,121/93,Bowel Obstruction,Severe,114
+P699,64,82,133/99,Bowel Obstruction,Mild,113
+P700,43,99,99/78,Fracture,Moderate,32
+P701,27,75,104/62,Hernia,Moderate,61
+P702,29,93,112/77,Torn ACL,Moderate,79
+P703,33,127,110/91,Kidney Stones,Severe,54
+P704,32,104,129/86,Kidney Stones,Severe,49
+P705,50,94,124/83,Appendicitis,Severe,69
+P706,34,122,132/73,Gallstones,Severe,57
+P707,52,102,112/77,Appendicitis,Severe,62
+P708,69,90,114/95,Fracture,Severe,42
+P709,54,124,147/98,Appendicitis,Severe,49
+P710,19,109,120/97,Appendicitis,Moderate,56
+P711,43,87,137/95,Appendicitis,Moderate,74
+P712,60,93,120/79,Gallstones,Moderate,51
+P713,39,126,110/70,Fracture,Severe,54
+P714,71,74,106/81,Fracture,Mild,35
+P715,33,126,126/86,Torn ACL,Severe,81
+P716,46,73,95/62,Gallstones,Mild,53
+P717,37,86,102/76,Gallstones,Mild,42
+P718,49,128,132/94,Heart Attack,Mild,123
+P719,49,85,115/96,Heart Attack,Severe,139
+P720,56,93,122/76,Bowel Obstruction,Mild,103
+P721,36,126,144/86,Appendicitis,Moderate,47
+P722,60,99,113/76,Hernia,Moderate,56
+P723,30,95,102/65,Gallstones,Moderate,53
+P724,44,83,149/96,Gallstones,Severe,55
+P725,59,105,137/82,Kidney Stones,Severe,31
+P726,71,74,120/68,Fracture,Moderate,36
+P727,37,123,148/79,Gallstones,Severe,55
+P728,34,64,118/66,Hernia,Moderate,77
+P729,47,84,139/75,Dislocated Knee,Severe,53
+P730,31,108,132/75,Torn ACL,Severe,69
+P731,25,68,126/69,Torn ACL,Moderate,79
+P732,32,76,121/63,Gallstones,Mild,43
+P733,48,101,115/72,Gallstones,Severe,40
+P734,35,62,98/71,Hernia,Moderate,72
+P735,35,120,118/92,Dislocated Knee,Severe,39
+P736,64,82,119/84,Fracture,Moderate,57
+P737,42,121,139/92,Appendicitis,Moderate,53
+P738,52,113,119/72,Appendicitis,Moderate,55
+P739,65,86,126/99,Heart Attack,Mild,91
+P740,57,90,125/86,Bowel Obstruction,Severe,110
+P741,50,71,102/63,Hernia,Mild,56
+P742,70,106,124/77,Heart Attack,Severe,96
+P743,57,92,126/98,Appendicitis,Severe,61
+P744,50,105,125/73,Gallstones,Severe,54
+P745,33,86,146/98,Torn ACL,Severe,62
+P746,32,78,102/69,Dislocated Knee,Moderate,50
+P747,56,88,109/84,Kidney Stones,Mild,35
+P748,26,75,107/64,Hernia,Moderate,71
+P749,63,92,138/73,Heart Attack,Severe,111
+P750,60,98,147/75,Hernia,Severe,69
+P751,74,111,113/87,Stroke,Moderate,171
+P752,67,116,131/95,Heart Attack,Moderate,93
+P753,63,88,140/76,Gallstones,Severe,43
+P754,69,114,130/98,Bowel Obstruction,Severe,90
+P755,61,69,91/61,Gallstones,Moderate,56
+P756,33,110,133/70,Dislocated Knee,Severe,40
+P757,21,71,120/76,Fracture,Moderate,30
+P758,49,107,116/71,Dislocated Knee,Severe,39
+P759,29,90,149/87,Torn ACL,Severe,70
+P760,42,121,136/86,Bowel Obstruction,Severe,113
+P761,33,109,129/75,Fracture,Severe,57
+P762,58,121,149/70,Kidney Stones,Severe,42
+P763,71,116,125/82,Fracture,Severe,51
+P764,44,113,141/95,Appendicitis,Moderate,69
+P765,79,105,118/79,Bowel Obstruction,Severe,91
+P766,45,81,110/88,Kidney Stones,Severe,57
+P767,51,110,123/71,Kidney Stones,Severe,58
+P768,34,98,113/80,Kidney Stones,Moderate,39
+P769,54,73,123/71,Fracture,Moderate,51
+P770,53,101,123/85,Appendicitis,Mild,73
+P771,18,79,107/65,Torn ACL,Moderate,62
+P772,45,83,130/77,Gallstones,Severe,58
+P773,48,91,125/86,Fracture,Severe,42
+P774,58,111,124/81,Kidney Stones,Severe,46
+P775,44,84,136/89,Kidney Stones,Severe,52
+P776,56,122,142/90,Kidney Stones,Severe,32
+P777,43,102,141/77,Hernia,Severe,62
+P778,74,108,115/94,Bowel Obstruction,Mild,90
+P779,69,86,114/67,Hernia,Mild,72
+P780,29,90,148/84,Dislocated Knee,Severe,51
+P781,46,95,144/89,Dislocated Knee,Severe,43
+P782,48,126,110/86,Dislocated Knee,Severe,31
+P783,55,127,142/72,Stroke,Mild,149
+P784,44,99,129/78,Appendicitis,Severe,51
+P785,39,86,102/72,Torn ACL,Mild,87
+P786,57,124,131/80,Kidney Stones,Severe,48
+P787,37,85,112/70,Gallstones,Mild,52
+P788,37,98,101/74,Fracture,Moderate,52
+P789,55,90,147/71,Gallstones,Severe,50
+P790,35,117,137/70,Gallstones,Severe,42
+P791,56,126,116/80,Kidney Stones,Severe,36
+P792,42,97,101/70,Dislocated Knee,Moderate,48
+P793,31,75,102/84,Torn ACL,Moderate,88
+P794,74,83,120/86,Stroke,None,96
+P795,28,120,132/82,Dislocated Knee,Severe,52
+P796,67,85,114/81,Hernia,Mild,78
+P797,60,114,139/97,Hernia,Severe,66
+P798,47,124,124/83,Appendicitis,Mild,68
+P799,77,126,147/92,Bowel Obstruction,Severe,84
+P800,61,128,119/79,Bowel Obstruction,Severe,116
+P801,78,106,142/70,Fracture,Severe,41
+P802,58,83,135/73,Hernia,Severe,50
+P803,53,87,133/88,Heart Attack,Severe,125
+P804,76,91,103/84,Fracture,Moderate,47
+P805,58,126,140/73,Gallstones,Severe,44
+P806,43,120,113/99,Appendicitis,Severe,74
+P807,26,89,125/77,Hernia,Moderate,75
+P808,36,85,112/72,Gallstones,Moderate,45
+P809,37,78,126/77,Kidney Stones,Moderate,59
+P810,72,91,139/96,Bowel Obstruction,Severe,98
+P811,60,108,142/80,Bowel Obstruction,Severe,112
+P812,37,123,127/72,Dislocated Knee,Severe,36
+P813,29,92,120/70,Torn ACL,Moderate,63
+P814,33,108,133/91,Gallstones,Severe,41
+P815,35,100,125/83,Kidney Stones,Severe,36
+P816,45,128,118/95,Fracture,Severe,42
+P817,34,91,99/66,Kidney Stones,Moderate,55
+P818,46,82,128/79,Appendicitis,Severe,72
+P819,64,126,147/82,Gallstones,Severe,58
+P820,25,79,93/78,Torn ACL,Moderate,80
+P821,52,92,112/85,Heart Attack,Severe,98
+P822,30,86,124/76,Fracture,Severe,35
+P823,51,96,90/69,Kidney Stones,Moderate,40
+P824,25,104,121/94,Fracture,Severe,46
+P825,43,95,112/70,Kidney Stones,Moderate,35
+P826,60,92,123/97,Stroke,Severe,107
+P827,74,106,141/84,Stroke,Severe,98
+P828,44,63,123/75,Hernia,Moderate,52
+P829,45,127,148/99,Bowel Obstruction,Moderate,104
+P830,54,97,127/71,Gallstones,Severe,49
+P831,67,71,102/77,Fracture,Moderate,44
+P832,35,98,115/73,Hernia,Mild,63
+P833,41,80,131/92,Kidney Stones,Severe,53
+P834,47,87,117/60,Kidney Stones,Moderate,48
+P835,69,96,115/62,Fracture,Mild,31
+P836,57,72,112/81,Fracture,Moderate,51
+P837,52,125,117/81,Appendicitis,Severe,67
+P838,60,100,134/78,Bowel Obstruction,Severe,60
+P839,47,82,121/72,Hernia,Moderate,60
+P840,39,118,132/96,Hernia,Severe,62
+P841,53,99,96/77,Gallstones,Moderate,55
+P842,23,90,110/67,Fracture,Moderate,45
+P843,40,107,126/97,Appendicitis,Severe,53
+P844,35,97,95/72,Gallstones,Mild,50
+P845,57,114,142/93,Fracture,Severe,48
+P846,66,83,124/60,Fracture,Moderate,33
+P847,63,93,118/78,Gallstones,Mild,58
+P848,71,60,108/60,Fracture,None,31
+P849,69,113,134/98,Gallstones,Severe,52
+P850,75,120,148/79,Fracture,Severe,39
+P851,69,83,98/74,Fracture,Moderate,33
+P852,26,85,93/76,Fracture,Moderate,45
+P853,29,79,104/77,Hernia,Moderate,64
+P854,62,124,119/98,Stroke,Severe,97
+P855,63,109,120/72,Fracture,Severe,34
+P856,30,92,121/74,Appendicitis,Severe,54
+P857,26,61,112/66,Torn ACL,Moderate,67
+P858,50,73,115/78,Kidney Stones,Mild,34
+P859,54,99,126/82,Kidney Stones,Severe,31
+P860,78,85,112/95,Bowel Obstruction,Moderate,94
+P861,44,78,111/78,Hernia,Moderate,79
+P862,45,63,104/84,Gallstones,Mild,51
+P863,31,117,145/76,Torn ACL,Severe,89
+P864,49,99,97/77,Hernia,Mild,77
+P865,36,72,96/69,Fracture,Mild,31
+P866,35,82,95/84,Gallstones,Moderate,56
+P867,28,93,117/62,Fracture,Moderate,40
+P868,31,80,128/67,Torn ACL,Moderate,78
+P869,71,86,118/82,Bowel Obstruction,Moderate,60
+P870,25,63,124/62,Fracture,Moderate,51
+P871,31,86,105/65,Hernia,Moderate,56
+P872,65,92,125/64,Hernia,Mild,58
+P873,41,64,121/62,Hernia,Moderate,69
+P874,74,127,140/86,Bowel Obstruction,Mild,119
+P875,52,73,104/74,Kidney Stones,Moderate,35
+P876,60,94,112/99,Hernia,Severe,64
+P877,19,91,121/79,Torn ACL,Moderate,76
+P878,63,123,123/94,Gallstones,Severe,41
+P879,36,90,114/65,Gallstones,Mild,53
+P880,41,93,134/93,Bowel Obstruction,Severe,89
+P881,45,81,124/64,Hernia,Moderate,65
+P882,34,95,111/73,Torn ACL,Severe,80
+P883,47,98,114/64,Fracture,Moderate,34
+P884,55,116,149/78,Bowel Obstruction,Severe,64
+P885,19,115,131/91,Torn ACL,Severe,81
+P886,58,125,142/87,Kidney Stones,Severe,36
+P887,72,83,113/98,Bowel Obstruction,Moderate,77
+P888,49,121,145/97,Appendicitis,Moderate,50
+P889,51,121,133/93,Appendicitis,Severe,61
+P890,42,96,128/69,Hernia,Moderate,66
+P891,39,113,113/72,Torn ACL,Severe,66
+P892,27,65,111/60,Dislocated Knee,Moderate,33
+P893,68,93,118/96,Bowel Obstruction,Moderate,106
+P894,30,83,116/65,Hernia,Moderate,57
+P895,48,66,108/81,Hernia,Moderate,74
+P896,59,88,111/70,Hernia,Moderate,69
+P897,48,113,110/99,Kidney Stones,Severe,45
+P898,75,93,132/94,Stroke,Moderate,168
+P899,51,78,123/62,Kidney Stones,Moderate,47
+P900,50,96,90/78,Gallstones,Moderate,40
+P901,45,119,135/85,Gallstones,Severe,40
+P902,40,102,116/81,Kidney Stones,Severe,50
+P903,44,63,103/73,Gallstones,Mild,55
+P904,48,76,126/71,Gallstones,Moderate,45
+P905,58,65,108/77,Fracture,Moderate,35
+P906,47,72,96/74,Hernia,Mild,61
+P907,72,124,136/94,Bowel Obstruction,Severe,64
+P908,50,117,125/83,Appendicitis,Severe,73
+P909,39,88,123/60,Hernia,Moderate,58
+P910,24,91,120/77,Fracture,Mild,40
+P911,18,111,115/76,Appendicitis,Severe,54
+P912,51,100,126/70,Appendicitis,Moderate,54
+P913,51,120,141/84,Bowel Obstruction,Moderate,86
+P914,63,81,145/87,Stroke,Mild,160
+P915,49,81,115/60,Hernia,Moderate,60
+P916,54,117,133/77,Appendicitis,Severe,58
+P917,41,81,141/94,Hernia,Severe,77
+P918,26,96,139/77,Appendicitis,Severe,70
+P919,50,108,133/79,Kidney Stones,Severe,42
+P920,27,116,127/86,Torn ACL,Severe,68
+P921,21,79,98/72,Torn ACL,Mild,74
+P922,45,98,135/89,Dislocated Knee,Severe,55
+P923,50,128,127/90,Hernia,Severe,52
+P924,66,92,101/76,Hernia,Moderate,73
+P925,67,85,124/67,Hernia,Moderate,69
+P926,51,95,105/83,Kidney Stones,Moderate,58
+P927,30,89,125/85,Kidney Stones,Severe,55
+P928,56,75,109/75,Fracture,Moderate,36
+P929,40,93,116/70,Kidney Stones,Severe,55
+P930,64,83,135/80,Heart Attack,Severe,91
+P931,54,105,142/82,Hernia,Severe,63
+P932,63,80,117/75,Gallstones,Moderate,43
+P933,59,94,122/92,Appendicitis,Mild,61
+P934,57,79,92/82,Kidney Stones,Moderate,41
+P935,53,98,143/81,Stroke,Mild,95
+P936,21,91,139/90,Dislocated Knee,Severe,48
+P937,61,65,109/80,Gallstones,Mild,50
+P938,24,90,124/72,Appendicitis,Moderate,70
+P939,50,74,92/65,Kidney Stones,Moderate,46
+P940,25,70,127/67,Fracture,Moderate,39
+P941,52,73,99/71,Fracture,Moderate,35
+P942,63,69,106/76,Fracture,Moderate,32
+P943,25,63,102/61,Hernia,Moderate,59
+P944,74,84,128/71,Stroke,None,101
+P945,31,90,121/78,Kidney Stones,Severe,31
+P946,28,115,119/90,Fracture,Severe,49
+P947,65,91,123/85,Gallstones,Severe,57
+P948,50,109,148/89,Gallstones,Severe,46
+P949,55,81,99/82,Gallstones,Moderate,45
+P950,67,89,117/90,Fracture,Severe,53
+P951,68,77,117/84,Gallstones,Moderate,59
+P952,45,89,141/79,Kidney Stones,Severe,55
+P953,40,119,132/98,Dislocated Knee,Severe,36
+P954,38,126,142/74,Dislocated Knee,Severe,31
+P955,68,77,113/67,Fracture,Moderate,58
+P956,38,128,120/71,Torn ACL,Severe,85
+P957,50,99,114/63,Fracture,Moderate,39
+P958,54,102,125/70,Fracture,Severe,41
+P959,47,127,114/95,Bowel Obstruction,Severe,89
+P960,36,105,149/96,Appendicitis,Severe,70
+P961,29,87,107/72,Fracture,None,34
+P962,19,86,135/95,Fracture,Severe,53
+P963,47,68,121/74,Hernia,Moderate,54
+P964,28,72,104/69,Fracture,Mild,53
+P965,25,94,104/75,Torn ACL,Moderate,63
+P966,30,123,135/98,Kidney Stones,Severe,34
+P967,60,124,136/76,Bowel Obstruction,Severe,99
+P968,45,83,149/85,Gallstones,Severe,49
+P969,56,127,142/97,Heart Attack,Severe,98
+P970,71,87,124/64,Fracture,Moderate,31
+P971,52,124,123/80,Bowel Obstruction,Severe,101
+P972,57,120,117/74,Hernia,Severe,68
+P973,44,64,118/78,Gallstones,Moderate,58
+P974,33,75,129/63,Gallstones,Mild,51
+P975,66,77,124/84,Gallstones,Moderate,41
+P976,33,124,124/97,Kidney Stones,Severe,39
+P977,44,80,148/95,Bowel Obstruction,Severe,76
+P978,51,98,115/76,Hernia,Mild,79
+P979,39,88,113/76,Fracture,Severe,52
+P980,68,110,140/84,Heart Attack,Severe,129
+P981,67,83,115/75,Hernia,Moderate,74
+P982,44,95,139/81,Kidney Stones,Severe,59
+P983,61,129,121/92,Bowel Obstruction,Moderate,80
+P984,55,82,109/74,Hernia,Mild,72
+P985,76,96,146/82,Bowel Obstruction,Severe,78
+P986,42,115,145/89,Hernia,Severe,69
+P987,46,83,143/71,Bowel Obstruction,Severe,64
+P988,76,92,148/74,Heart Attack,Severe,147
+P989,23,100,117/70,Dislocated Knee,Severe,57
+P990,53,100,118/86,Bowel Obstruction,Severe,64
+P991,75,119,147/80,Heart Attack,Severe,108
+P992,30,112,138/80,Kidney Stones,Severe,46
+P993,49,80,116/95,Bowel Obstruction,Moderate,86
+P994,33,82,109/65,Fracture,None,51
+P995,22,97,115/94,Torn ACL,Severe,88
+P996,30,62,110/62,Kidney Stones,Mild,38
+P997,42,117,129/89,Dislocated Knee,Severe,41
+P998,38,127,132/75,Appendicitis,Severe,63
+P999,52,61,108/78,Gallstones,Moderate,46
+P1000,59,79,98/76,Fracture,None,56
