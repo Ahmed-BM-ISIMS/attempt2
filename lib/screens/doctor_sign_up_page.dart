@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:vitasora/screens/HomePage.dart';
 import 'package:vitasora/screens/email_verif.dart';
 import 'package:vitasora/screens/login_screen.dart';
 

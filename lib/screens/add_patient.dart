@@ -222,7 +222,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
                     const SizedBox(height: 12),
 
                     DropdownButtonFormField<int>(
-                      value: _selectedCondition,
+                      initialValue: _selectedCondition,
                       decoration: _inputDecoration("Condition / Case"),
                       items: _conditions.entries.map((entry) {
                         return DropdownMenuItem<int>(

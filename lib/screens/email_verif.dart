@@ -29,6 +29,7 @@ class _EmailVerifState extends State<EmailVerif> {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
