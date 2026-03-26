@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:flutter/material.dart';
 
 class AddPatientPage extends StatefulWidget {
@@ -59,24 +61,67 @@ class _AddPatientPageState extends State<AddPatientPage> {
     }
   }
 
+  Future<double> getPrediction(List<double> features) async {
+    final response = await http.post(
+      Uri.parse("http://172.30.204.102:8000/predict"),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({"features": features}),
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      return data["prediction"][0].toDouble();
+    } else {
+      throw Exception("Failed to get prediction");
+    }
+  }
+
   Future<void> _savePatient() async {
     if (_formKey.currentState!.validate()) {
       final sbp = int.tryParse(_sbpController.text) ?? 0;
       final dbp = int.tryParse(_dbpController.text) ?? 0;
       final map = dbp + ((sbp - dbp) / 3);
 
+      final age = double.tryParse(_ageController.text) ?? 0;
+      final gender = (_selectedGender ?? 0).toDouble();
+      final heartRate = double.tryParse(_hrController.text) ?? 0;
+      final respiratoryRate = double.tryParse(_rrController.text) ?? 0;
+      final oxygen = double.tryParse(_spo2Controller.text) ?? 0;
+      final painLevel = _selectedPain.toDouble();
+      final condition = (_selectedCondition ?? 0).toDouble();
+      final bpMean = double.parse(map.toStringAsFixed(1));
+      final needsSurgery = 1.0;
+      final features = [
+        age,
+        gender,
+        heartRate,
+        respiratoryRate,
+        oxygen,
+        painLevel,
+        condition,
+        bpMean,
+        needsSurgery
+      ];
+      double prediction = 0;
+      try {
+        prediction = await getPrediction(features);
+      } catch (e) {
+        print("Error getting prediction: $e");
+      }
       final patientData = {
         'name': _nameController.text,
-        'age': int.tryParse(_ageController.text) ?? 0,
-        'gender': _selectedGender ?? 0,
-        'heart_rate': int.tryParse(_hrController.text) ?? 0,
-        'respiratory_rate': int.tryParse(_rrController.text) ?? 0,
-        'oxygen_saturation': int.tryParse(_spo2Controller.text) ?? 0,
+        'age': age,
+        'gender': gender,
+        'heart_rate': heartRate,
+        'respiratory_rate': respiratoryRate,
+        'oxygen_saturation': oxygen,
         'systolic_bp': sbp,
         'diastolic_bp': dbp,
-        'bp_mean': double.parse(map.toStringAsFixed(1)),
-        'pain_level': _selectedPain,
-        'condition': _selectedCondition ?? 0,
+        'bp_mean': bpMean,
+        'pain_level': painLevel,
+        'condition': condition ,
+        'needs_surgery': needsSurgery,
+        'emergency_score': prediction,
         'created_at': FieldValue.serverTimestamp(),
       };
 

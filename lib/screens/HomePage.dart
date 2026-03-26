@@ -84,7 +84,7 @@ class _HomepageState extends State<Homepage> {
                 final condition = conditionMap[patient['condition']] ?? "Unknown";
                 final orNumber = '1';
                 final duration = '??';
-                final emergencyScore =  0;
+                final emergencyScore = patient['emergency_score'] ?? 0;
                 return Container(
                   margin: const EdgeInsets.only(bottom: 16),
                   padding: const EdgeInsets.all(16),
