@@ -114,6 +114,7 @@ class _AddPatientPageState extends State<AddPatientPage> {
         'gender': gender,
         'heart_rate': heartRate,
         'respiratory_rate': respiratoryRate,
+        'respiratory_rate': respiratoryRate,
         'oxygen_saturation': oxygen,
         'systolic_bp': sbp,
         'diastolic_bp': dbp,
