@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:vitasora/api_service.dart';
+import 'package:vitasora/core/constants/medical_constants.dart';
 
 class AddPatientPage extends StatefulWidget {
   final String? patientId;
@@ -14,24 +14,6 @@ class AddPatientPage extends StatefulWidget {
 }
 
 class _AddPatientPageState extends State<AddPatientPage> {
-  // Condition Map
-  final Map<String, int> _conditions = {
-    'Heart Attack': 1,
-    'Stroke': 2,
-    'Dislocated Knee': 3,
-    'Kidney Stones': 4,
-    'Appendicitis': 5,
-    'Torn ACL': 6,
-    'Bowel Obstruction': 7,
-    'Fracture': 8,
-    'Gallstones': 9,
-    'Hernia': 10,
-  };
-
-  int? _selectedCondition;
-  int? _selectedGender;
-  int _selectedPain = 0;
-
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _ageController = TextEditingController();
@@ -41,127 +23,197 @@ class _AddPatientPageState extends State<AddPatientPage> {
   final _sbpController = TextEditingController();
   final _dbpController = TextEditingController();
 
+  int? _selectedCondition;
+  int? _selectedGender;
+  int _selectedPain = 0;
+  bool _needsSurgery = false;
+  bool _isLoading = false;
+
+  bool get _isEditing => widget.patientId != null && widget.patientId!.isNotEmpty;
+
   @override
   void initState() {
     super.initState();
-
-    // If we are editing, pre-fill the fields
     if (widget.patientData != null) {
       final data = widget.patientData!;
       _nameController.text = data['name'] ?? '';
       _ageController.text = data['age']?.toString() ?? '';
-      _selectedGender = data['gender'];
+      _selectedGender = (data['gender'] as num?)?.toInt();
       _hrController.text = data['heart_rate']?.toString() ?? '';
       _rrController.text = data['respiratory_rate']?.toString() ?? '';
       _spo2Controller.text = data['oxygen_saturation']?.toString() ?? '';
       _sbpController.text = data['systolic_bp']?.toString() ?? '';
       _dbpController.text = data['diastolic_bp']?.toString() ?? '';
-      _selectedPain = data['pain_level'] ?? 0;
-      _selectedCondition = data['condition'];
+      _selectedPain = (data['pain_level'] as num?)?.toInt() ?? 0;
+      _selectedCondition = (data['condition'] as num?)?.toInt();
+      _needsSurgery = (data['needs_surgery'] as num?)?.toDouble() == 1.0;
     }
   }
 
-  Future<double> getPrediction(List<double> features) async {
-    final response = await http.post(
-      Uri.parse("http://172.30.204.102:8000/predict"),
-      headers: {"Content-Type": "application/json"},
-      body: jsonEncode({"features": features}),
-    );
-
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      return data["prediction"][0].toDouble();
-    } else {
-      throw Exception("Failed to get prediction");
-    }
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _ageController.dispose();
+    _hrController.dispose();
+    _rrController.dispose();
+    _spo2Controller.dispose();
+    _sbpController.dispose();
+    _dbpController.dispose();
+    super.dispose();
   }
+
+  // ── Validators ────────────────────────────────────────────────────────────
+
+  String? _requiredNumber(String? value, String label, int min, int max) {
+    if (value == null || value.trim().isEmpty) return 'Required';
+    final n = num.tryParse(value);
+    if (n == null) return 'Must be a number';
+    if (n < min || n > max) return 'Valid range: $min–$max';
+    return null;
+  }
+
+  // ── Save ──────────────────────────────────────────────────────────────────
 
   Future<void> _savePatient() async {
-    if (_formKey.currentState!.validate()) {
-      final sbp = int.tryParse(_sbpController.text) ?? 0;
-      final dbp = int.tryParse(_dbpController.text) ?? 0;
-      final map = dbp + ((sbp - dbp) / 3);
+    if (!_formKey.currentState!.validate()) return;
+    if (_selectedGender == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please select a gender')),
+      );
+      return;
+    }
 
-      final age = double.tryParse(_ageController.text) ?? 0;
-      final gender = (_selectedGender ?? 0).toDouble();
-      final heartRate = double.tryParse(_hrController.text) ?? 0;
-      final respiratoryRate = double.tryParse(_rrController.text) ?? 0;
-      final oxygen = double.tryParse(_spo2Controller.text) ?? 0;
+    setState(() => _isLoading = true);
+
+    try {
+      final sbp = int.parse(_sbpController.text.trim());
+      final dbp = int.parse(_dbpController.text.trim());
+      final bpMean = double.parse((dbp + (sbp - dbp) / 3.0).toStringAsFixed(1));
+
+      final age = double.parse(_ageController.text.trim());
+      final gender = _selectedGender!.toDouble();
+      final heartRate = double.parse(_hrController.text.trim());
+      final respiratoryRate = double.parse(_rrController.text.trim());
+      final oxygen = double.parse(_spo2Controller.text.trim());
       final painLevel = _selectedPain.toDouble();
-      final condition = (_selectedCondition ?? 0).toDouble();
-      final bpMean = double.parse(map.toStringAsFixed(1));
-      final needsSurgery = 1.0;
+      final condition = _selectedCondition!.toDouble();
+      final needsSurgery = _needsSurgery ? 1.0 : 0.0;
+
       final features = [
-        age,
-        gender,
-        heartRate,
-        respiratoryRate,
-        oxygen,
-        painLevel,
-        condition,
-        bpMean,
-        needsSurgery
+        age, gender, heartRate, respiratoryRate,
+        oxygen, painLevel, condition, bpMean, needsSurgery,
       ];
-      double prediction = 0;
+
+      // ── AI Score ────────────────────────────────────────────────────────
+      double? prediction;
       try {
-        prediction = await getPrediction(features);
+        prediction = await ApiService.predict(features);
       } catch (e) {
-        print("Error getting prediction: $e");
+        if (!mounted) return;
+        final continueAnyway = await showDialog<bool>(
+          context: context,
+          builder: (_) => AlertDialog(
+            title: const Text('AI Score Unavailable'),
+            content: Text(
+              'Could not reach the prediction server.\n\n'
+              'Error: $e\n\n'
+              'Save patient without an AI score?',
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: const Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(context, true),
+                child: const Text('Save Anyway'),
+              ),
+            ],
+          ),
+        );
+        if (continueAnyway != true) {
+          setState(() => _isLoading = false);
+          return;
+        }
+        // null means "score unavailable" — not 0
       }
+
+      if (!mounted) return;
+
       final patientData = {
-        'name': _nameController.text,
+        'name': _nameController.text.trim(),
         'age': age,
         'gender': gender,
         'heart_rate': heartRate,
-        'respiratory_rate': respiratoryRate,
         'respiratory_rate': respiratoryRate,
         'oxygen_saturation': oxygen,
         'systolic_bp': sbp,
         'diastolic_bp': dbp,
         'bp_mean': bpMean,
         'pain_level': painLevel,
-        'condition': condition ,
+        'condition': condition,
         'needs_surgery': needsSurgery,
-        'emergency_score': prediction,
-        'created_at': FieldValue.serverTimestamp(),
+        'emergency_score': prediction, // null = unavailable, not 0
+        'updated_at': FieldValue.serverTimestamp(),
       };
 
-      if (widget.patientId == null) {
-        // Add new patient
-        await FirebaseFirestore.instance.collection('patients').add(patientData);
+      if (!_isEditing) {
+        patientData['created_at'] = FieldValue.serverTimestamp();
+        await FirebaseFirestore.instance
+            .collection('patients')
+            .add(patientData);
       } else {
-        // Update existing patient
         await FirebaseFirestore.instance
             .collection('patients')
             .doc(widget.patientId)
             .update(patientData);
       }
 
+      if (!mounted) return;
       Navigator.pop(context);
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to save patient: $e')),
+      );
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
     }
   }
+
+  // ── UI Helpers ────────────────────────────────────────────────────────────
 
   InputDecoration _inputDecoration(String label) {
     return InputDecoration(
       labelText: label,
       border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
       filled: true,
-      fillColor: Colors.grey[100],
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      fillColor: Colors.grey[50],
+      contentPadding:
+          const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
     );
   }
+
+  Widget _sectionLabel(String text) => Padding(
+        padding: const EdgeInsets.only(top: 8, bottom: 4),
+        child: Text(
+          text,
+          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.patientId == null ? "Add Patient" : "Edit Patient"),
+        title: Text(_isEditing ? 'Edit Patient' : 'Add Patient'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Card(
           elevation: 4,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Form(
@@ -170,127 +222,193 @@ class _AddPatientPageState extends State<AddPatientPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // ── Personal Info ────────────────────────────────────
+                    _sectionLabel('Patient Information'),
                     TextFormField(
                       controller: _nameController,
-                      decoration: _inputDecoration("Patient Name"),
+                      decoration: _inputDecoration('Patient Name'),
+                      validator: (v) =>
+                          (v == null || v.trim().isEmpty) ? 'Required' : null,
                     ),
                     const SizedBox(height: 12),
                     TextFormField(
                       controller: _ageController,
-                      decoration: _inputDecoration("Age"),
+                      decoration: _inputDecoration(
+                          'Age (${MedicalConstants.minAge}–${MedicalConstants.maxAge})'),
                       keyboardType: TextInputType.number,
+                      validator: (v) => _requiredNumber(v, 'Age',
+                          MedicalConstants.minAge, MedicalConstants.maxAge),
                     ),
                     const SizedBox(height: 12),
 
-                    const Text("Gender", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+                    // ── Gender ───────────────────────────────────────────
+                    _sectionLabel('Gender'),
                     Row(
                       children: [
                         Expanded(
                           child: RadioListTile<int>(
-                            title: const Text("Male"),
+                            title: const Text('Male'),
                             value: 1,
                             groupValue: _selectedGender,
-                            onChanged: (value) => setState(() => _selectedGender = value),
+                            onChanged: (v) =>
+                                setState(() => _selectedGender = v),
+                            contentPadding: EdgeInsets.zero,
                           ),
                         ),
                         Expanded(
                           child: RadioListTile<int>(
-                            title: const Text("Female"),
+                            title: const Text('Female'),
                             value: 0,
                             groupValue: _selectedGender,
-                            onChanged: (value) => setState(() => _selectedGender = value),
+                            onChanged: (v) =>
+                                setState(() => _selectedGender = v),
+                            contentPadding: EdgeInsets.zero,
                           ),
                         ),
                       ],
                     ),
 
-                    const SizedBox(height: 12),
+                    // ── Vitals ───────────────────────────────────────────
+                    _sectionLabel('Vital Signs'),
                     TextFormField(
                       controller: _hrController,
-                      decoration: _inputDecoration("Heart Rate"),
+                      decoration: _inputDecoration(
+                          'Heart Rate (${MedicalConstants.minHeartRate}–${MedicalConstants.maxHeartRate} bpm)'),
                       keyboardType: TextInputType.number,
+                      validator: (v) => _requiredNumber(
+                          v,
+                          'Heart Rate',
+                          MedicalConstants.minHeartRate,
+                          MedicalConstants.maxHeartRate),
                     ),
                     const SizedBox(height: 12),
                     TextFormField(
                       controller: _rrController,
-                      decoration: _inputDecoration("Respiratory Rate"),
+                      decoration: _inputDecoration(
+                          'Respiratory Rate (${MedicalConstants.minRespiratoryRate}–${MedicalConstants.maxRespiratoryRate}/min)'),
                       keyboardType: TextInputType.number,
+                      validator: (v) => _requiredNumber(
+                          v,
+                          'Respiratory Rate',
+                          MedicalConstants.minRespiratoryRate,
+                          MedicalConstants.maxRespiratoryRate),
                     ),
                     const SizedBox(height: 12),
                     TextFormField(
                       controller: _spo2Controller,
-                      decoration: _inputDecoration("Oxygen Saturation"),
+                      decoration: _inputDecoration(
+                          'Oxygen Saturation (${MedicalConstants.minOxygenSaturation}–${MedicalConstants.maxOxygenSaturation}%)'),
                       keyboardType: TextInputType.number,
+                      validator: (v) => _requiredNumber(
+                          v,
+                          'Oxygen Saturation',
+                          MedicalConstants.minOxygenSaturation,
+                          MedicalConstants.maxOxygenSaturation),
                     ),
                     const SizedBox(height: 12),
                     TextFormField(
                       controller: _sbpController,
-                      decoration: _inputDecoration("Systolic BP"),
+                      decoration: _inputDecoration(
+                          'Systolic BP (${MedicalConstants.minSystolicBp}–${MedicalConstants.maxSystolicBp} mmHg)'),
                       keyboardType: TextInputType.number,
+                      validator: (v) => _requiredNumber(
+                          v,
+                          'Systolic BP',
+                          MedicalConstants.minSystolicBp,
+                          MedicalConstants.maxSystolicBp),
                     ),
                     const SizedBox(height: 12),
                     TextFormField(
                       controller: _dbpController,
-                      decoration: _inputDecoration("Diastolic BP"),
+                      decoration: _inputDecoration(
+                          'Diastolic BP (${MedicalConstants.minDiastolicBp}–${MedicalConstants.maxDiastolicBp} mmHg)'),
                       keyboardType: TextInputType.number,
+                      validator: (v) => _requiredNumber(
+                          v,
+                          'Diastolic BP',
+                          MedicalConstants.minDiastolicBp,
+                          MedicalConstants.maxDiastolicBp),
                     ),
                     const SizedBox(height: 12),
 
-                    const Text("Pain Level", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-                    Column(
+                    // ── Pain Level ───────────────────────────────────────
+                    _sectionLabel('Pain Level'),
+                    Wrap(
                       children: [
-                        RadioListTile<int>(
-                          title: const Text("None"),
-                          value: 0,
-                          groupValue: _selectedPain,
-                          onChanged: (value) => setState(() => _selectedPain = value!),
-                        ),
-                        RadioListTile<int>(
-                          title: const Text("Mild"),
-                          value: 1,
-                          groupValue: _selectedPain,
-                          onChanged: (value) => setState(() => _selectedPain = value!),
-                        ),
-                        RadioListTile<int>(
-                          title: const Text("Moderate"),
-                          value: 2,
-                          groupValue: _selectedPain,
-                          onChanged: (value) => setState(() => _selectedPain = value!),
-                        ),
-                        RadioListTile<int>(
-                          title: const Text("Severe"),
-                          value: 3,
-                          groupValue: _selectedPain,
-                          onChanged: (value) => setState(() => _selectedPain = value!),
-                        ),
+                        for (final entry in {
+                          0: 'None',
+                          1: 'Mild',
+                          2: 'Moderate',
+                          3: 'Severe'
+                        }.entries)
+                          SizedBox(
+                            width: 160,
+                            child: RadioListTile<int>(
+                              title: Text(entry.value),
+                              value: entry.key,
+                              groupValue: _selectedPain,
+                              onChanged: (v) =>
+                                  setState(() => _selectedPain = v!),
+                              contentPadding: EdgeInsets.zero,
+                            ),
+                          ),
                       ],
                     ),
                     const SizedBox(height: 12),
 
+                    // ── Condition ────────────────────────────────────────
                     DropdownButtonFormField<int>(
-                      initialValue: _selectedCondition,
-                      decoration: _inputDecoration("Condition / Case"),
-                      items: _conditions.entries.map((entry) {
-                        return DropdownMenuItem<int>(
-                          value: entry.value,
-                          child: Text(entry.key),
-                        );
-                      }).toList(),
-                      onChanged: (value) => setState(() => _selectedCondition = value),
-                      validator: (value) => value == null ? "Please select a condition" : null,
+                      value: _selectedCondition,
+                      decoration: _inputDecoration('Condition / Case'),
+                      items: MedicalConstants.conditionToId.entries
+                          .map((e) => DropdownMenuItem<int>(
+                                value: e.value,
+                                child: Text(e.key),
+                              ))
+                          .toList(),
+                      onChanged: (v) =>
+                          setState(() => _selectedCondition = v),
+                      validator: (v) =>
+                          v == null ? 'Please select a condition' : null,
                     ),
+                    const SizedBox(height: 12),
 
+                    // ── Surgery Toggle ───────────────────────────────────
+                    Card(
+                      color: Colors.grey[50],
+                      child: SwitchListTile(
+                        title: const Text('Requires Surgery'),
+                        subtitle: const Text(
+                            'Affects the AI priority prediction'),
+                        value: _needsSurgery,
+                        onChanged: (v) =>
+                            setState(() => _needsSurgery = v),
+                      ),
+                    ),
                     const SizedBox(height: 20),
+
+                    // ── Submit ───────────────────────────────────────────
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: _savePatient,
+                        onPressed: _isLoading ? null : _savePatient,
                         style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 14),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                          padding:
+                              const EdgeInsets.symmetric(vertical: 14),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12)),
                         ),
-                        child: Text(widget.patientId == null ? "Save Patient" : "Update Patient",
-                            style: const TextStyle(fontSize: 16)),
+                        child: _isLoading
+                            ? const SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator(
+                                    strokeWidth: 2, color: Colors.white),
+                              )
+                            : Text(
+                                _isEditing ? 'Update Patient' : 'Save Patient',
+                                style: const TextStyle(fontSize: 16),
+                              ),
                       ),
                     ),
                   ],

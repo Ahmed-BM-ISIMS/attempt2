@@ -24,7 +24,7 @@ class WelcomeScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               Center(
-                child: Image.asset('assets/logo.png', width: 300, height: 300),
+                child: Image.asset('assets/logo.jpg', width: 300, height: 300),
               ),
               const SizedBox(height: 5),
               Text(

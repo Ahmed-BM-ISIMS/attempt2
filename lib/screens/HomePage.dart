@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:vitasora/core/constants/medical_constants.dart';
+import 'package:vitasora/screens/Project/Drawer.dart';
+import 'package:vitasora/widgets/patient_card.dart';
 import 'add_patient.dart';
 
 class Homepage extends StatefulWidget {
@@ -10,37 +13,50 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final textTheme = theme.textTheme;
-    final colorScheme = theme.colorScheme;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
-        title: const Icon(Icons.home),
+        title: const Text('VitaSora'),
+        leading: IconButton(
+          icon: const Icon(Icons.menu, color: Colors.white),
+          onPressed: () => _scaffoldKey.currentState?.openDrawer(),
+        ),
         actions: [
-          const Padding(
-            padding: EdgeInsets.all(12),
-            child: CircleAvatar(child: Icon(Icons.account_circle)),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.menu),
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: CircleAvatar(
+              backgroundColor: colorScheme.primary.withOpacity(0.3),
+              child: const Icon(Icons.account_circle, color: Colors.white),
+            ),
           ),
         ],
       ),
-
+      drawer: const AppDrawer(),
       body: SafeArea(
         child: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
               .collection('patients')
-          // For now we remove orderBy until emergency_score is predicted
-          //TODO orderBy('emergency_score', descending: true)
+              .orderBy('emergency_score', descending: true)
               .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
-              return const Center(child: Text("Error loading patients"));
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.error_outline, size: 48, color: Colors.red),
+                    const SizedBox(height: 12),
+                    Text('Error loading patients\n${snapshot.error}',
+                        textAlign: TextAlign.center),
+                  ],
+                ),
+              );
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -49,214 +65,87 @@ class _HomepageState extends State<Homepage> {
             final patients = snapshot.data!.docs;
 
             if (patients.isEmpty) {
-              return const Center(child: Text("No patients found"));
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.people_outline,
+                        size: 64, color: Colors.grey[400]),
+                    const SizedBox(height: 16),
+                    Text('No patients yet',
+                        style: TextStyle(
+                            fontSize: 18, color: Colors.grey[600])),
+                    const SizedBox(height: 8),
+                    Text('Tap + to add your first patient',
+                        style: TextStyle(color: Colors.grey[400])),
+                  ],
+                ),
+              );
             }
 
             return ListView.builder(
               padding: const EdgeInsets.all(16),
               itemCount: patients.length,
               itemBuilder: (context, index) {
-                final patient = snapshot.data!.docs[index];
-
-                final name = patient['name'] ?? "Unknown";
-                final age = patient['age'] ?? "N/A";
-                final gender = patient['gender'] == 1 ? "Male" : "Female";
-                final heartRate = patient['heart_rate'] ?? "N/A";
-                final respiratoryRate = patient['respiratory_rate'] ?? "N/A";
-                final oxygen = patient['oxygen_saturation'] ?? "N/A";
-                final systolic = patient['systolic_bp'] ?? "N/A";
-                final diastolic = patient['diastolic_bp'] ?? "N/A";
-                final bpMean = patient['bp_mean'] ?? "N/A";
-                final painLevel = patient['pain_level'] ?? "N/A";
-
-                Map<int, String> conditionMap = {
-                  1: 'Heart Attack',
-                  2: 'Stroke',
-                  3: 'Dislocated Knee',
-                  4: 'Kidney Stones',
-                  5: 'Appendicitis',
-                  6: 'Torn ACL',
-                  7: 'Bowel Obstruction',
-                  8: 'Fracture',
-                  9: 'Gallstones',
-                  10: 'Hernia',
-                };
-                final condition = conditionMap[patient['condition']] ?? "Unknown";
-                final orNumber = '1';
-                final duration = '??';
-                final emergencyScore = patient['emergency_score'] ?? 0;
-                return Container(
-                  margin: const EdgeInsets.only(bottom: 16),
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 15,
-                        offset: const Offset(0, 4),
+                final doc = patients[index];
+                final data = doc.data() as Map<String, dynamic>;
+                return PatientCard(
+                  patientId: doc.id,
+                  data: data,
+                  onEdit: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => AddPatientPage(
+                        patientId: doc.id,
+                        patientData: data,
                       ),
-                    ],
+                    ),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Name & Score
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              name,
-                              style: textTheme.titleMedium,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          Text(
-                            "Score: $emergencyScore",
-                            style: textTheme.bodyLarge?.copyWith(
-                              color: colorScheme.error,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          PopupMenuButton<String>(
-                            onSelected: (value) async {
-                              if (value == 'edit') {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => AddPatientPage(
-                                      patientId: patient.id,
-                                      patientData: patient.data() as Map<String, dynamic>,
-                                    ),
-                                  ),
-                                );
-                              } else if (value == 'delete') {
-                                final confirm = await showDialog<bool>(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                    title: const Text("Confirm Delete"),
-                                    content: Text("Delete patient $name?"),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () => Navigator.pop(context, false),
-                                        child: const Text("Cancel"),
-                                      ),
-                                      TextButton(
-                                        onPressed: () => Navigator.pop(context, true),
-                                        child: const Text("Delete"),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                                if (confirm == true) {
-                                  await FirebaseFirestore.instance
-                                      .collection('patients')
-                                      .doc(patients[index].id)
-                                      .delete();
-                                }
-                              }
-                            },
-                            itemBuilder: (context) => [
-                              const PopupMenuItem(
-                                value: 'edit',
-                                child: Row(
-                                  children: [
-                                    Icon(Icons.edit, size: 18),
-                                    SizedBox(width: 8),
-                                    Text("Edit"),
-                                  ],
-                                ),
-                              ),
-                              const PopupMenuItem(
-                                value: 'delete',
-                                child: Row(
-                                  children: [
-                                    Icon(Icons.delete, size: 18, color: Colors.red),
-                                    SizedBox(width: 8),
-                                    Text("Delete"),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: 8),
-
-                      // Case & OR
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              "Case: $condition",
-                              style: textTheme.bodyLarge,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          Flexible(
-                            child: Text(
-                              "OR: $orNumber",
-                              style: textTheme.bodyLarge,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: 8),
-
-                      // Duration
-                      Text(
-                        "Duration: $duration",
-                        style: textTheme.bodyMedium?.copyWith(
-                          color: Colors.grey[700],
-                        ),
-                      ),
-
-                      const Divider(),
-
-                      // Extra info
-                      Wrap(
-                        spacing: 16,
-                        runSpacing: 8,
-                        children: [
-                          Text("Age: $age", style: textTheme.bodyMedium),
-                          Text("Gender: $gender", style: textTheme.bodyMedium),
-                          Text("Heart Rate: $heartRate", style: textTheme.bodyMedium),
-                          Text("Respiratory Rate: $respiratoryRate", style: textTheme.bodyMedium),
-                          Text("Oxygen Saturation: $oxygen%", style: textTheme.bodyMedium),
-                          Text("Mean BP: $bpMean", style: textTheme.bodyMedium),
-                          Text("Pain Level: $painLevel", style: textTheme.bodyMedium),
-                        ],
-                      ),
-                    ],
-                  ),
+                  onDelete: () => _confirmDelete(context, doc.id, data['name'] ?? 'Unknown'),
                 );
-
               },
             );
           },
         ),
       ),
-
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         backgroundColor: colorScheme.primary,
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => AddPatientPage(
-                patientId: '',
-              ),
-            ),
-          );
-        },
-        child: const Icon(Icons.add, color: Colors.white),
+        onPressed: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const AddPatientPage()),
+        ),
+        icon: const Icon(Icons.person_add, color: Colors.white),
+        label: const Text('Add Patient',
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),
       ),
     );
+  }
+
+  Future<void> _confirmDelete(
+      BuildContext context, String patientId, String name) async {
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text('Confirm Delete'),
+        content: Text('Remove patient "$name" from the list?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
+    );
+    if (confirm == true) {
+      await FirebaseFirestore.instance
+          .collection('patients')
+          .doc(patientId)
+          .delete();
+    }
   }
 }

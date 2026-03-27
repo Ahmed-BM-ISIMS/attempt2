@@ -1,6 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vitasora/providers/auth_provider.dart';
 import 'package:vitasora/screens/doctor_sign_up_page.dart';
 import 'package:vitasora/screens/reset_password.dart';
 import 'package:vitasora/screens/HomePage.dart';
@@ -18,7 +19,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
   bool _obscurePassword = true;
   bool _rememberMe = false;
-  bool _isLoading = false;
 
   @override
   void initState() {
@@ -26,77 +26,59 @@ class _LoginScreenState extends State<LoginScreen> {
     _loadSavedEmail();
   }
 
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   Future<void> _loadSavedEmail() async {
     final prefs = await SharedPreferences.getInstance();
-    final savedEmail = prefs.getString('email');
-    if (savedEmail != null) {
+    final saved = prefs.getString('remembered_email');
+    if (saved != null && mounted) {
       setState(() {
-        _emailController.text = savedEmail;
+        _emailController.text = saved;
         _rememberMe = true;
       });
     }
   }
 
   Future<void> _handleLogin() async {
-    if (_formKey.currentState!.validate()) {
-      setState(() => _isLoading = true);
+    if (!_formKey.currentState!.validate()) return;
 
-      try {
-        final userCredential = await FirebaseAuth.instance
-            .signInWithEmailAndPassword(
-          email: _emailController.text.trim(),
-          password: _passwordController.text.trim(),
-        );
+    final prefs = await SharedPreferences.getInstance();
+    if (_rememberMe) {
+      await prefs.setString('remembered_email', _emailController.text.trim());
+    } else {
+      await prefs.remove('remembered_email');
+    }
 
-        final user = userCredential.user;
+    final auth = context.read<AppAuthProvider>();
+    final success = await auth.signIn(
+      email: _emailController.text.trim(),
+      password: _passwordController.text.trim(),
+    );
 
-        if (user != null) {
-          // Save email if remember me is checked
-          final prefs = await SharedPreferences.getInstance();
-          if (_rememberMe) {
-            await prefs.setString('email', _emailController.text.trim());
-          } else {
-            await prefs.remove('email');
-          }
+    if (!mounted) return;
 
-          // Show success
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Login successful!')),
-          );
-
-          // Navigate to home page (replace with your own page
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (_) => const Homepage()),
-          );
-        }
-      } on FirebaseAuthException catch (e) {
-        String message;
-        if (e.code == 'user-not-found') {
-          message = 'No user found for that email.';
-        } else if (e.code == 'wrong-password') {
-          message = 'Wrong password provided.';
-        } else {
-          message = e.message ?? 'Login failed.';
-        }
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(message)),
-        );
-      } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('An unexpected error occurred: $e')),
-        );
-      } finally {
-        setState(() => _isLoading = false);
-      }
+    if (success) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const Homepage()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(auth.errorMessage ?? 'Login failed.')),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final textTheme = theme.textTheme;
     final colorScheme = theme.colorScheme;
+    final isLoading = context.watch<AppAuthProvider>().isLoading;
 
     return Scaffold(
       body: SafeArea(
@@ -106,12 +88,11 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               const SizedBox(height: 40),
               SizedBox(
-                width: 200,
-                height: 200,
-                child: Image.asset('assets/logo.png'),
+                width: 180,
+                height: 180,
+                child: Image.asset('assets/logo.jpg'),
               ),
-              const SizedBox(height: 40),
-
+              const SizedBox(height: 32),
               Container(
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
@@ -119,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: Colors.black.withOpacity(0.08),
                       blurRadius: 15,
                       offset: const Offset(0, 4),
                     ),
@@ -129,11 +110,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   key: _formKey,
                   child: Column(
                     children: [
-                      Text(
-                        "Log in Now",
-                        style: textTheme.titleLarge,
-                      ),
-                      const SizedBox(height: 32),
+                      Text('Welcome Back',
+                          style: theme.textTheme.titleLarge),
+                      const SizedBox(height: 24),
 
                       // Email
                       TextFormField(
@@ -141,16 +120,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(
                           labelText: 'Email',
-                          prefixIcon: Icon(Icons.email),
+                          prefixIcon: Icon(Icons.email_outlined),
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
+                        validator: (v) {
+                          if (v == null || v.trim().isEmpty) {
                             return 'Please enter your email';
                           }
-                          final emailRegex =
-                          RegExp(r'^[^@]+@[^@]+\.[^@]+');
-                          if (!emailRegex.hasMatch(value)) {
-                            return 'Please enter a valid email';
+                          if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(v)) {
+                            return 'Enter a valid email address';
                           }
                           return null;
                         },
@@ -163,101 +140,83 @@ class _LoginScreenState extends State<LoginScreen> {
                         obscureText: _obscurePassword,
                         decoration: InputDecoration(
                           labelText: 'Password',
-                          prefixIcon: const Icon(Icons.lock),
+                          prefixIcon: const Icon(Icons.lock_outline),
                           suffixIcon: IconButton(
-                            icon: Icon(
-                              _obscurePassword
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
-                            ),
+                            icon: Icon(_obscurePassword
+                                ? Icons.visibility_outlined
+                                : Icons.visibility_off_outlined),
                             onPressed: () => setState(
-                                    () => _obscurePassword = !_obscurePassword),
+                                () => _obscurePassword = !_obscurePassword),
                           ),
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
+                        validator: (v) {
+                          if (v == null || v.isEmpty) {
                             return 'Please enter your password';
                           }
-                          if (value.length < 8) {
+                          if (v.length < 8) {
                             return 'Password must be at least 8 characters';
                           }
                           return null;
                         },
                       ),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: 8),
 
-                      // Forgot password
+                      // Remember me + forgot password
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                    const ResetPassword()),
-                              );
-                            },
-                            child: Text(
-                              'Forget password ?',
-                              style: TextStyle(
-                                color: colorScheme.secondary,
-                                fontWeight: FontWeight.bold,
+                          Row(
+                            children: [
+                              Checkbox(
+                                value: _rememberMe,
+                                onChanged: (v) =>
+                                    setState(() => _rememberMe = v ?? false),
+                                activeColor: colorScheme.primary,
                               ),
+                              const Text('Remember me'),
+                            ],
+                          ),
+                          TextButton(
+                            onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => const ResetPassword()),
                             ),
+                            child: const Text('Forgot password?'),
                           ),
                         ],
                       ),
-
-                      // Remember me
-                      Row(
-                        children: [
-                          Checkbox(
-                            value: _rememberMe,
-                            onChanged: (value) => setState(
-                                    () => _rememberMe = value ?? false),
-                            activeColor: colorScheme.primary,
-                          ),
-                          Text('Remember me', style: textTheme.bodyMedium),
-                        ],
-                      ),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 16),
 
                       // Login button
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: _isLoading ? null : _handleLogin,
-                          child: _isLoading
+                          onPressed: isLoading ? null : _handleLogin,
+                          child: isLoading
                               ? const SizedBox(
-                            height: 20,
-                            width: 20,
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
-                              strokeWidth: 2,
-                            ),
-                          )
+                                  height: 20,
+                                  width: 20,
+                                  child: CircularProgressIndicator(
+                                      strokeWidth: 2, color: Colors.white),
+                                )
                               : const Text('Login'),
                         ),
                       ),
                       const SizedBox(height: 16),
 
-                      // Signup redirect
                       TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                const DoctorSignUpPage()),
-                          );
-                        },
+                        onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const DoctorSignUpPage()),
+                        ),
                         child: Text.rich(
                           TextSpan(
                             text: "Don't have an account? ",
                             children: [
                               TextSpan(
-                                text: "Sign up",
+                                text: 'Sign Up',
                                 style: TextStyle(
                                   color: colorScheme.primary,
                                   fontWeight: FontWeight.bold,
@@ -271,17 +230,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
+              const SizedBox(height: 40),
             ],
           ),
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
   }
 }
