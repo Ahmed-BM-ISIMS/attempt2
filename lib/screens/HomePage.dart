@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:vitasora/core/constants/medical_constants.dart';
+import 'package:vitasora/core/services/patient_service.dart';
 import 'package:vitasora/screens/Project/Drawer.dart';
 import 'package:vitasora/widgets/patient_card.dart';
 import 'add_patient.dart';
@@ -14,6 +16,64 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final ScrollController _scrollController = ScrollController();
+  final List<DocumentSnapshot> _allPatients = [];
+  bool _isLoadingMore = false;
+  bool _hasMore = true;
+  DocumentSnapshot? _lastDocument;
+  static const int _pageSize = 20;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_scrollListener);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _scrollListener() {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 100) {
+      if (!_isLoadingMore && _hasMore) {
+        _loadMorePatients();
+      }
+    }
+  }
+
+  Future<void> _loadMorePatients() async {
+    setState(() {
+      _isLoadingMore = true;
+    });
+
+    try {
+      final patientService = Provider.of<PatientService>(context, listen: false);
+      final snapshot = await patientService.fetchPatientsNextPage(
+        limit: _pageSize,
+        startAfterDocument: _lastDocument,
+      );
+
+      if (snapshot.docs.isEmpty) {
+        setState(() {
+          _hasMore = false;
+        });
+      } else {
+        setState(() {
+          _allPatients.addAll(snapshot.docs);
+          _lastDocument = snapshot.docs.last;
+        });
+      }
+    } catch (e) {
+      // Error handled by StreamBuilder
+    } finally {
+      setState(() {
+        _isLoadingMore = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +100,8 @@ class _HomepageState extends State<Homepage> {
       drawer: const AppDrawer(),
       body: SafeArea(
         child: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance
-              .collection('patients')
-              .orderBy('emergency_score', descending: true)
-              .snapshots(),
+          stream: Provider.of<PatientService>(context, listen: false)
+              .patientsStreamPaginated(limit: _pageSize),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               return Center(
@@ -85,8 +143,15 @@ class _HomepageState extends State<Homepage> {
 
             return ListView.builder(
               padding: const EdgeInsets.all(16),
-              itemCount: patients.length,
+              itemCount: patients.length + (_isLoadingMore ? 1 : 0),
               itemBuilder: (context, index) {
+                if (index >= patients.length) {
+                  return const Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                }
+
                 final doc = patients[index];
                 final data = doc.data() as Map<String, dynamic>;
                 return PatientCard(
@@ -146,6 +211,12 @@ class _HomepageState extends State<Homepage> {
           .collection('patients')
           .doc(patientId)
           .delete();
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Patient deleted successfully')),
+        );
+      }
     }
   }
 }
